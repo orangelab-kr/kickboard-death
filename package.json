@@ -1,0 +1,50 @@
+{
+  "name": "kickboard-death",
+  "version": "1.1.2",
+  "main": "dist/index.js",
+  "repository": "https://github.com/orangelab-kr/kickboard-death.git",
+  "author": "bakjonghun <bakjonghun@hikick.kr>",
+  "license": "MIT",
+  "scripts": {
+    "invoke": "yarn invoke:dev",
+    "invoke:dev": "cross-env NODE_ENV=dev sls invoke local --function app",
+    "invoke:stage": "cross-env NODE_ENV=stage sls invoke local --function app",
+    "invoke:prod": "cross-env NODE_ENV=prod sls invoke local --function app",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "deploy": "yarn deploy:prod",
+    "deploy:prod": "sls deploy --stage prod",
+    "deploy:stage": "sls deploy --stage stage",
+    "deploy:dev": "sls deploy --stage dev"
+  },
+  "dependencies": {
+    "@slack/webhook": "^6.0.0",
+    "aws-lambda": "^1.0.6",
+    "mongoose": "^6.0.12",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.84",
+    "@types/eslint": "^7.28.2",
+    "@types/eslint-plugin-prettier": "^3.1.0",
+    "@types/node": "^16.11.6",
+    "@types/prettier": "^2.4.1",
+    "@types/serverless": "^1.78.38",
+    "@types/webpack-node-externals": "^2.5.3",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
+    "cross-env": "^7.0.2",
+    "eslint": "^8.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.1",
+    "serverless": "^2.64.1",
+    "serverless-dotenv-plugin": "^3.10.0",
+    "serverless-offline": "^8.2.0",
+    "serverless-webpack": "^5.5.5",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.4.4",
+    "webpack": "^5.60.0",
+    "webpack-node-externals": "^3.0.0"
+  }
+}
