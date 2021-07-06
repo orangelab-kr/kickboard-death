@@ -1,8 +1,9 @@
 service: 'kickboard-death'
+useDotenv: true
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   region: ap-northeast-2
   stage: prod
   lambdaHashingVersion: '20201221'
