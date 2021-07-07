@@ -13,6 +13,7 @@ export interface KickboardDoc extends Document {
   helmetId?: string | null;
   updatedAt?: Date;
   createdAt?: Date;
+  disconnectedAt?: Date | null;
 }
 
 export enum KickboardMode {
@@ -61,6 +62,7 @@ export const KickboardSchema = new Schema(
     },
     status: { type: Schema.Types.ObjectId, ref: 'status' },
     helmetId: { type: Schema.Types.ObjectId, ref: 'helmet' },
+    disconnectedAt: { type: Date, required: false },
   },
   { timestamps: true }
 );
