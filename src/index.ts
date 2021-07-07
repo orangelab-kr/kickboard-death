@@ -1,6 +1,6 @@
+import 'dayjs/locale/ko';
 import { Handler } from 'aws-lambda';
 import dayjs, { Dayjs } from 'dayjs';
-import 'dayjs/locale/ko';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import {
   KickboardDoc,
