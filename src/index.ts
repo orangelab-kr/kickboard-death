@@ -1,12 +1,14 @@
-import 'dayjs/locale/ko';
 import { Handler } from 'aws-lambda';
 import dayjs, { Dayjs } from 'dayjs';
+import 'dayjs/locale/ko';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import {
   KickboardDoc,
+  KickboardMode,
   KickboardModel,
   KickboardQueryDisconnected,
   KickboardQueryLookupStatus,
+  KickboardQueryMode,
   KickboardQueryReconnected,
   logger,
   MongoDB,
@@ -63,6 +65,13 @@ async function getDisconnectedKickboard(
 ): Promise<KickboardDoc[]> {
   return KickboardModel.aggregate([
     ...KickboardQueryLookupStatus(),
+    ...KickboardQueryMode(
+      KickboardMode.READY,
+      KickboardMode.INUSE,
+      KickboardMode.BROKEN,
+      KickboardMode.UNREGISTERED,
+      KickboardMode.DISABLED
+    ),
     ...KickboardQueryDisconnected(deadlineDate.toDate()),
   ]);
 }
@@ -72,6 +81,13 @@ async function getReconnectedKickboard(
 ): Promise<KickboardDoc[]> {
   return KickboardModel.aggregate([
     ...KickboardQueryLookupStatus(),
+    ...KickboardQueryMode(
+      KickboardMode.READY,
+      KickboardMode.INUSE,
+      KickboardMode.BROKEN,
+      KickboardMode.UNREGISTERED,
+      KickboardMode.DISABLED
+    ),
     ...KickboardQueryReconnected(deadlineDate.toDate()),
   ]);
 }
