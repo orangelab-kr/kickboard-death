@@ -58,6 +58,8 @@ export const handler: Handler = async (event, context) => {
   · 사용자 좌표: https://map.kakao.com/link/map/${params}
   · 관리자 URL: https://console.firebase.google.com/u/0/project/hikick-dfcb5/firestore/data/~2Fkick~2F${kickboardId}`);
   }
+
+  logger.info('[Main] 모든 킥보드를 처리했습니다.');
 };
 
 async function getDisconnectedKickboard(

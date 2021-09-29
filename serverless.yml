@@ -1,12 +1,14 @@
 service: 'kickboard-death'
-useDotenv: false
+useDotenv: true
 
 provider:
   name: aws
   runtime: nodejs14.x
   region: ap-northeast-2
-  stage: prod
+  stage: ${opt.stage, 'stage'}
   lambdaHashingVersion: '20201221'
+  apiGateway:
+    shouldStartNameWithService: true
 
 plugins:
   - serverless-webpack
@@ -18,8 +20,6 @@ custom:
     packager: 'yarn'
     packagerOptions:
       noFrozenLockfile: true
-  serverless-offline:
-    noPrependStageInUrl: true
 
 functions:
   app:
