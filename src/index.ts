@@ -24,7 +24,7 @@ dayjs.extend(localizedFormat);
 
 export const handler: Handler = async (event, context) => {
   const deadlineDate = dayjs().subtract(30, 'minutes');
-  logger.info('[Main] 시스템을 시작합니다.');
+  logger.info('Main / 시스템을 시작합니다.');
   await MongoDB.init();
 
   const reconnectedKickboards = await getReconnectedKickboard(deadlineDate);
@@ -32,7 +32,7 @@ export const handler: Handler = async (event, context) => {
   for (const { kickboardCode, kickboardId, status } of reconnectedKickboards) {
     const { createdAt, gps }: any = status;
     const formatDate = dayjs(createdAt).format('LLL');
-    logger.info(`[Main] ${kickboardCode} 킥보드가 살아났습니다. ${formatDate}`);
+    logger.info(`Main / ${kickboardCode} 킥보드가 살아났습니다. ${formatDate}`);
     const params = `${kickboardCode},${gps.latitude},${gps.longitude}`;
     await Webhook.send(`😎 킥보드가 살아나따!
     
@@ -49,7 +49,7 @@ export const handler: Handler = async (event, context) => {
     const { createdAt, gps }: any = status;
     const formatDate = dayjs(createdAt).format('LLL');
     const params = `${kickboardCode},${gps.latitude},${gps.longitude}`;
-    logger.info(`[Main] ${kickboardCode} 킥보드가 죽었습니다. ${formatDate}`);
+    logger.info(`Main / ${kickboardCode} 킥보드가 죽었습니다. ${formatDate}`);
     await Webhook.send(`🩸 킥보드가 주거따!
     
   · 킥보드 코드: ${kickboardCode}
@@ -59,7 +59,7 @@ export const handler: Handler = async (event, context) => {
   · 관리자 URL: https://console.firebase.google.com/u/0/project/hikick-dfcb5/firestore/data/~2Fkick~2F${kickboardId}`);
   }
 
-  logger.info('[Main] 모든 킥보드를 처리했습니다.');
+  logger.info('Main / 모든 킥보드를 처리했습니다.');
 };
 
 async function getDisconnectedKickboard(
@@ -67,13 +67,6 @@ async function getDisconnectedKickboard(
 ): Promise<KickboardDoc[]> {
   return KickboardModel.aggregate([
     ...KickboardQueryLookupStatus(),
-    ...KickboardQueryMode(
-      KickboardMode.READY,
-      KickboardMode.INUSE,
-      KickboardMode.BROKEN,
-      KickboardMode.UNREGISTERED,
-      KickboardMode.DISABLED
-    ),
     ...KickboardQueryDisconnected(deadlineDate.toDate()),
   ]);
 }
@@ -83,13 +76,6 @@ async function getReconnectedKickboard(
 ): Promise<KickboardDoc[]> {
   return KickboardModel.aggregate([
     ...KickboardQueryLookupStatus(),
-    ...KickboardQueryMode(
-      KickboardMode.READY,
-      KickboardMode.INUSE,
-      KickboardMode.BROKEN,
-      KickboardMode.UNREGISTERED,
-      KickboardMode.DISABLED
-    ),
     ...KickboardQueryReconnected(deadlineDate.toDate()),
   ]);
 }
